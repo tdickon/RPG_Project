@@ -57,11 +57,10 @@ private:
 	double magic_crit;  //15.) A character's chance of landing a critical strike with a magical ability. 
 	//-----------------------------------------------------------------------------------------------------------------------
 	//Other Stats-These are stats that occur in the game, and have an affect on the character's derived stats.
+	race char_race;
 	std::string gender;
-	std::string race;
-	int char_level;
 	int char_age;
-	std::string char_homeland;
+	int char_level;
 	/*
 	std::vector<double> active_affect; //A placeholder vector for buffs / debuffs, etc.
 	*/
