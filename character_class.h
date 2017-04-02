@@ -65,7 +65,7 @@ private:
 	/*
 	std::vector<double> active_affect; //A placeholder vector for buffs / debuffs, etc.
 	*/
-	public:
+public:
 	//Constructors
 	char_player_stats(); //Default constructor;
 	//--------------------------------------------------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ private:
 	std::string homeland_name;
 	int faction_id;
 	std::string faction_name;
-	public:
+public:
 	//Constructors
 	race() : race_id(0), race_name('\0'), homeland_id(0), homeland_name('\0'), faction_id(0), faction_name('\0') {};
 	race(const int &, const std::string &, const int &, const std::string &, const int &, const std::string &); //Unique NPCS CTOR 
