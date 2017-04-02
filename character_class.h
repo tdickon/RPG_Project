@@ -67,9 +67,10 @@ private:
 public:
 	//Constructors
 	char_player_stats(); //Default constructor;
-	//--------------------------------------------------------------------------------------------------------------------------
+	//Base Mutators
 	void race_base_stats();
 	void start_stats();
+	//In Game Mutators
 	void level_up();
 	void health_damage();
 	void stam_loss();
