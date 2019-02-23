@@ -15,14 +15,69 @@ namespace character_and_item_logic
         protected personal_information character_info;
         protected level_system character_level;
         protected social_stat_attributes character_social_attributes;
-    }
 
+        //Constructors
+        protected character()
+        {
+            character_info = new personal_information();
+            character_level = new level_system();
+            character_social_attributes = new social_stat_attributes();
+            return;
+        }
+        protected character(personal_information char_info, level_system char_lvl, social_stat_attributes char_social_attributes)
+        {
+            character_info = char_info;
+            character_level = char_lvl;
+            character_social_attributes = char_social_attributes;
+            return;
+        }
+        protected character(character char_copy_from)
+        {
+            this.character_info = char_copy_from.character_info;
+            this.character_level = char_copy_from.character_level;
+            this.character_social_attributes = char_copy_from.character_social_attributes;
+            return;
+        }
+
+        //set functions
+        public void set_character_info(personal_information char_info)
+        {
+            character_info = char_info;
+            return;
+        }
+        public void set_character_level(level_system char_lvl_system)
+        {
+            character_level = char_lvl_system;
+            return;
+        }
+        public void set_social_attributes(social_stat_attributes social_attributes)
+        {
+            character_social_attributes = social_attributes;
+            return;
+        }
+        
+        //Return Functions
+        public personal_information return_character_info()
+        {
+            return character_info;
+        }
+        public level_system return_character_level()
+        {
+            return character_level;
+        }
+        public social_stat_attributes return_character_social_attributes()
+        {
+            return character_social_attributes;
+        }
+    }
     public class super : character
     {
         protected super_information character_super_info;
         protected base_combat_attributes character_base_combat_attributes;
-        protected power_type char_power_type;
         protected derived_stats character_derived_stats;
+        protected armor_stats character_active_armor;
+        //Constructors
+
     }
 
     public class player_character : super
@@ -45,24 +100,27 @@ namespace character_and_item_logic
         //Constructors
         public base_combat_attributes()
         {
-            super_strength = 0;
-            super_speed = 0;
-            super_vitality = 0;
-            super_reflexes = 0;
+            set_baseCombat_stat_value(0, "strength");
+            set_baseCombat_stat_value(0, "speed");
+            set_baseCombat_stat_value(0, "vitality");
+            set_baseCombat_stat_value(0, "reflexes");
+            return;
         }
         public base_combat_attributes(int str, int spd, int vit, int reflex)
         {
-            super_strength = str;
-            super_speed = spd;
-            super_vitality = vit;
-            super_reflexes = reflex;
+            set_baseCombat_stat_value(str, "strength");
+            set_baseCombat_stat_value(spd, "speed");
+            set_baseCombat_stat_value(vit, "vitality");
+            set_baseCombat_stat_value(reflex, "reflexes");
+            return;
         }
         public base_combat_attributes(base_combat_attributes stats_to_copy_from)
         {
-            this.super_strength = stats_to_copy_from.super_strength;
-            this.super_speed = stats_to_copy_from.super_speed;
-            this.super_vitality = stats_to_copy_from.super_vitality;
-            this.super_reflexes = stats_to_copy_from.super_reflexes;
+            set_baseCombat_stat_value(stats_to_copy_from.return_baseCombat_stat_value("strength"), "strength");
+            set_baseCombat_stat_value(stats_to_copy_from.return_baseCombat_stat_value("speed"), "speed");
+            set_baseCombat_stat_value(stats_to_copy_from.return_baseCombat_stat_value("vitality"), "vitality");
+            set_baseCombat_stat_value(stats_to_copy_from.return_baseCombat_stat_value("reflexes"), "reflexes");
+            return;
         }
 
         //Functionality
@@ -87,6 +145,26 @@ namespace character_and_item_logic
             }
             return value_to_return;
         }
+        public void set_baseCombat_stat_value(int value,string stat_to_return) //This is a function that returns a character's power stats. 
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            switch (stat_to_return)
+            {
+                case "strength":
+                    super_strength = tool_kit.set_int_value(value);
+                    break;
+                case "speed":
+                    super_speed = tool_kit.set_int_value(value);
+                    break;
+                case "vitality":
+                    super_vitality = tool_kit.set_int_value(value);
+                    break;
+                case "reflexes":
+                    super_reflexes = tool_kit.set_int_value(value);
+                    break;
+            }
+            return;
+        }
     }
     //---------------------------------------------------------------------------------------------------------------------------------------
     public class social_stat_attributes //Class that holds data about a character's social stats. 
@@ -103,33 +181,36 @@ namespace character_and_item_logic
         //Constructors
         public social_stat_attributes()
         {
-            street_smarts = 0;
-            education_level = 0;
-            charisma = 0;
-            tech_knowledge = 0;
-            science_knowledge = 0;
-            mystical_knowledge = 0;
-            cosmic_knowledge = 0;
+            set_social_stat_values(0, "street_smarts");
+            set_social_stat_values(0, "education_level");
+            set_social_stat_values(0, "charisma");
+            set_social_stat_values(0, "tech");
+            set_social_stat_values(0, "science");
+            set_social_stat_values(0, "mystical");
+            set_social_stat_values(0, "cosmic");
+            return;
         }
         public social_stat_attributes(int ss, int el, int charm, int tech, int sci, int myst, int cosmic)
         {
-            street_smarts = ss;
-            education_level = el;
-            charisma = charm;
-            tech_knowledge = tech;
-            science_knowledge = sci;
-            mystical_knowledge = myst;
-            cosmic_knowledge = cosmic;
+            set_social_stat_values(ss, "street_smarts");
+            set_social_stat_values(el, "education_level");
+            set_social_stat_values(charm, "charisma");
+            set_social_stat_values(tech, "tech");
+            set_social_stat_values(sci, "science");
+            set_social_stat_values(myst, "mystical");
+            set_social_stat_values(cosmic, "cosmic");
+            return;
         }
         public social_stat_attributes(social_stat_attributes stats_to_copy_from)
         {
-            this.street_smarts = stats_to_copy_from.street_smarts;
-            this.education_level = stats_to_copy_from.education_level;
-            this.charisma = stats_to_copy_from.charisma;
-            this.tech_knowledge = stats_to_copy_from.tech_knowledge;
-            this.science_knowledge = stats_to_copy_from.science_knowledge;
-            this.mystical_knowledge = stats_to_copy_from.mystical_knowledge;
-            this.cosmic_knowledge = stats_to_copy_from.cosmic_knowledge;
+            set_social_stat_values(stats_to_copy_from.return_social_stat_value("street_smarts"), "street_smarts");
+            set_social_stat_values(stats_to_copy_from.return_social_stat_value("education_level"), "education_level");
+            set_social_stat_values(stats_to_copy_from.return_social_stat_value("charisma"), "charisma");
+            set_social_stat_values(stats_to_copy_from.return_social_stat_value("tech"), "tech");
+            set_social_stat_values(stats_to_copy_from.return_social_stat_value("science"), "science");
+            set_social_stat_values(stats_to_copy_from.return_social_stat_value("mystical"), "mystical");
+            set_social_stat_values(stats_to_copy_from.return_social_stat_value("cosmic"), "cosmic");
+            return;
         }
 
         //Functionality 
@@ -163,6 +244,35 @@ namespace character_and_item_logic
             }
 
             return value_returned;
+        }
+        public void set_social_stat_values(int value, string stat_to_set)
+        {
+          misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+          switch (stat_to_set)
+          {
+           case "street_smarts":
+                street_smarts = tool_kit.set_int_value(value);
+                break;
+           case "education_level":
+                education_level = tool_kit.set_int_value(value);
+                break;
+           case "charisma":
+                charisma = tool_kit.set_int_value(value);
+                break;
+           case "tech":
+                tech_knowledge = tool_kit.set_int_value(value);
+                break;
+           case "science":
+                science_knowledge = tool_kit.set_int_value(value);
+                break;
+           case "mystical":
+                mystical_knowledge = tool_kit.set_int_value(value);
+                break;
+           case "cosmic":
+                cosmic_knowledge = tool_kit.set_int_value(value);
+                break;
+          }
+          return;
         }
     }
     //---------------------------------------------------------------------------------------------------------------------------------------
@@ -226,6 +336,8 @@ namespace character_and_item_logic
     public class super_information
     {
         private string super_name;
+        private int hero_reputation; //Negative shows a villain - Positive shows a hero
+        private power_type super_power; 
         //class about character reputation / status 
         //class about character type - which holds their abilities
     }
@@ -243,23 +355,33 @@ namespace character_and_item_logic
         //Constructors
         public level_system()
         {
-            current_level = 0;
-            current_exp = 0;
-            max_level = false;
+            set_current_level(0);
+            init_current_exp(0);
+            set_max_level(false);
+            return;
         }
         public level_system(int lvl, int xp, bool max_lvl)
         {
-            current_level = lvl;
-            current_exp = xp;
-            max_level = max_lvl;
+            set_current_level(lvl);
+            init_current_exp(xp);
+            set_max_level(max_lvl);
+            return;
         }
         public level_system(level_system copy)
         {
-            current_level = copy.current_level;
-            current_exp = copy.current_exp;
-            max_level = copy.max_level;
+            set_current_level(copy.return_current_level());
+            set_current_exp(copy.return_current_exp());
+            set_max_level(copy.return_max_level_stat());
+            return;
         }
 
+        //Init Functions
+        private void init_current_exp(int xp)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            current_exp = tool_kit.set_int_value(xp);
+            return;
+        }
         //Return functions 
         public int return_current_level()
         {
@@ -269,15 +391,30 @@ namespace character_and_item_logic
         {
             return current_exp;
         }
-
+        public bool return_max_level_stat()
+        {
+            return max_level;
+        }
         //Set functions
         public void set_current_level(int lvl)
         {
-            current_level = lvl;
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            current_level = tool_kit.set_int_value(lvl);
+            return;
         }
         public void set_current_exp(int xp)
         {
-            current_exp += xp;
+            if(xp < 0) { return; }
+            else
+            {
+                current_exp += xp;
+                return;
+            }
+        }
+        public void set_max_level(bool max_lvl)
+        {
+            max_level = max_lvl;
+            return;
         }
 
         public void level_up_check() //If Max_Level == True -> nothing. Else If: Current_XP >= Level Req -> reset current xp = Current_XP - Level Req, then ++Level, finally return.
@@ -488,14 +625,12 @@ namespace character_and_item_logic
         private void damage_controller(int hp_value)
         {
             bool dead_status = check_if_dead(hp_value);
-
             if (dead_status == true)
             {
                 current_health_points = 0;
                 alive_status = false;
                 return;
             }
-
             else
             {
                 current_health_points = hp_value;
@@ -551,18 +686,21 @@ namespace character_and_item_logic
         //Constructors
         public attack_speed_stats()
         {
-            base_attack_speed = 0;
-            current_attack_speed = 0;
+            set_base_attack_speed(0);
+            set_current_attack_speed(0);
+            return;
         }
         public attack_speed_stats(int base_attk_spd, int current_attk_spd)
         {
-            base_attack_speed = base_attk_spd;
-            current_attack_speed = current_attk_spd;
+            set_base_attack_speed(base_attk_spd);
+            set_current_attack_speed(current_attk_spd);
+            return;
         }
         public attack_speed_stats(attack_speed_stats stats_to_copy)
         {
-            this.base_attack_speed = stats_to_copy.base_attack_speed;
-            this.current_attack_speed = stats_to_copy.current_attack_speed;
+            set_base_attack_speed(stats_to_copy.return_base_attack_speed());
+            set_current_attack_speed(stats_to_copy.return_current_attack_speed());
+            return;
         }
 
         //Set Functions
@@ -600,21 +738,24 @@ namespace character_and_item_logic
         //Constructors
         public melee_damage_stats()
         {
-            min_melee_damage = 0;
-            max_melee_damage = 0;
-            crit_chance_percent = 0;
+            set_min_melee_damage(0);
+            set_max_melee_damage(0);
+            set_crit_chance(0);
+            return;
         }
         public melee_damage_stats(int min, int max, double crit_chance)
         {
-            min_melee_damage = min;
-            max_melee_damage = max;
-            crit_chance_percent = crit_chance;
+            set_min_melee_damage(min);
+            set_max_melee_damage(max);
+            set_crit_chance(crit_chance);
+            return;
         }
         public melee_damage_stats(melee_damage_stats stats_to_copy)
         {
-            this.min_melee_damage = stats_to_copy.min_melee_damage;
-            this.max_melee_damage = stats_to_copy.max_melee_damage;
-            this.crit_chance_percent = stats_to_copy.crit_chance_percent;
+            set_min_melee_damage(stats_to_copy.return_min_melee_damage());
+            set_max_melee_damage(stats_to_copy.return_max_melee_damage());
+            set_crit_chance(stats_to_copy.return_crit_chance());
+            return;
         }
 
         //Return functions
@@ -650,7 +791,6 @@ namespace character_and_item_logic
             crit_chance_percent = toolkit.set_double_value(crit_value);
             return;
         }
-
     }
     //------------------------------------------------------------------------------------------------------------------------------------
     public class range_damage_stats //Based of a char's super-reflexes, can be + or - by buffs or debuffs
@@ -662,21 +802,24 @@ namespace character_and_item_logic
         //Constructors
         public range_damage_stats()
         {
-            min_ranged_damage = 0;
-            max_ranged_damage = 0;
-            ranged_crit_chance_percentage = 0;
+            set_min_ranged_damage(0);
+            set_max_ranged_damage(0);
+            set_ranged_crit_chance(0);
+            return;
         }
         public range_damage_stats(int max, int min, double crit_chance)
         {
-            min_ranged_damage = min;
-            max_ranged_damage = max;
-            ranged_crit_chance_percentage = crit_chance;
+            set_min_ranged_damage(min);
+            set_max_ranged_damage(max);
+            set_ranged_crit_chance(crit_chance);
+            return;
         }
         public range_damage_stats(range_damage_stats stats_to_copy)
         {
-            this.min_ranged_damage = stats_to_copy.min_ranged_damage;
-            this.max_ranged_damage = stats_to_copy.max_ranged_damage;
-            this.ranged_crit_chance_percentage = stats_to_copy.ranged_crit_chance_percentage;
+            set_min_ranged_damage(stats_to_copy.return_min_ranged_damage());
+            set_max_ranged_damage(stats_to_copy.return_max_ranged_damage());
+            set_ranged_crit_chance(stats_to_copy.return_ranged_crit_damage());
+            return;
         }
 
         //Return functions
@@ -725,21 +868,24 @@ namespace character_and_item_logic
         //Constructors
         public armor_stats()
         {
-            armor_name = "";
-            armor_rating = 0;
-            speed_reduction = 0;
+            set_armor_name("");
+            set_armor_rating(0);
+            set_speed_reduction(0);
+            return;
         }
         public armor_stats(string name, int rating, int reduction)
         {
-            armor_name = name;
-            armor_rating = rating;
-            speed_reduction = reduction;
+            set_armor_name(name);
+            set_armor_rating(rating);
+            set_speed_reduction(reduction);
+            return;
         }
         public armor_stats(armor_stats stats_to_copy)
         {
-            this.armor_name = stats_to_copy.armor_name;
-            this.armor_rating = stats_to_copy.armor_rating;
-            this.speed_reduction = stats_to_copy.speed_reduction;
+            set_armor_name(stats_to_copy.return_armor_name());
+            set_armor_rating(stats_to_copy.return_armor_rating());
+            set_speed_reduction(stats_to_copy.return_armor_speed_reduction());
+            return;
         }
 
         //Return functions
@@ -759,27 +905,14 @@ namespace character_and_item_logic
         //Set Functions 
         public void set_armor_rating(int rate_to_set_to)
         {
-            if (rate_to_set_to > 0)
-            {
-                armor_rating = 0;
-            }
-
-            else
-            {
-                armor_rating = rate_to_set_to;
-            }
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            armor_rating = tool_kit.set_int_value(rate_to_set_to);
             return;
         }
         public void set_speed_reduction(int speed_to_set_to)
         {
-            if (speed_to_set_to > 0)
-            {
-                speed_reduction = 0;
-            }
-            else
-            {
-                speed_reduction = speed_to_set_to;
-            }
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            speed_reduction = tool_kit.set_int_value(speed_to_set_to);
             return;
         }
         public void set_armor_name(string string_name)
@@ -871,6 +1004,19 @@ namespace character_and_item_logic
         {
             name = "";
         }
+        public power_type(string pwr_name, power_type_dmg_ref[] ref_array)
+        {
+            set_power_name(pwr_name);
+            set_power_ref_list(ref_array);
+            return;
+        }
+        public power_type(power_type copy_from)
+        {
+            set_power_name(copy_from.return_name());
+            this.power_dmg_ref_list = copy_from.power_dmg_ref_list;
+            return;
+        }
+        //Return Functions
         protected string return_name()
         {
             return name;
@@ -881,7 +1027,7 @@ namespace character_and_item_logic
 
             int array_length = power_dmg_ref_list.Length;
 
-            for(int index = 0; index < array_length; ++index)
+            for (int index = 0; index < array_length; ++index)
             {
                 if (name_needed == power_dmg_ref_list[index].return_power_name())
                 {
@@ -893,7 +1039,8 @@ namespace character_and_item_logic
             }
             return return_value;
         }
-        
+
+        //Set Functions
         public void set_power_name(string pwr_name)
         {
             name = pwr_name;
@@ -905,7 +1052,7 @@ namespace character_and_item_logic
         }
 
     }
-        public class power_type_dmg_ref //Power type will hold a name of a power, the damage that that power does against someone with a normal power, 
+    public class power_type_dmg_ref //Power type will hold a name of a power, the damage that that power does against someone with a normal power, 
     {
         private string power_name;
         private double dmg_value_against_power;
@@ -935,16 +1082,14 @@ namespace character_and_item_logic
             return dmg_value_against_power;
         }
     }
-        public class power_type_extensions
+    public class power_type_extensions
     {
         public static string[] power_names_list = { "Vigilante", "Toxin", "Fire", "Ice", "Water", "Mineral", "Nature",
                                                     "Metal", "Electric", "Telepathic", "Magical", "Supernatural", "Celestial", "Cybernetic","Atomic"};
-
         public power_type set_power_type(string type)
         {
             power_type temp = new power_type();
-            power_type_dmg_ref[] ref_sheet;
-            switch(type)
+            switch (type)
             {
                 case "Vigilante":
                     temp.set_power_name(type);
@@ -1203,7 +1348,7 @@ namespace character_and_item_logic
                         }
                     case 13: //Cybernetic
                         {
-                            power_type_dmg_ref temp = new power_type_dmg_ref(power_names_list[index],1);
+                            power_type_dmg_ref temp = new power_type_dmg_ref(power_names_list[index], 1);
                             return_list[index] = temp;
                             break;
                         }
@@ -1397,7 +1542,7 @@ namespace character_and_item_logic
                         }
                     case 11: //Supernatural
                         {
-                            power_type_dmg_ref temp = new power_type_dmg_ref(power_names_list[index],1);
+                            power_type_dmg_ref temp = new power_type_dmg_ref(power_names_list[index], 1);
                             return_list[index] = temp;
                             break;
                         }
@@ -2391,7 +2536,7 @@ namespace character_and_item_logic
                         }
                     case 5: //Mineral
                         {
-                            power_type_dmg_ref temp = new power_type_dmg_ref(power_names_list[index],1);
+                            power_type_dmg_ref temp = new power_type_dmg_ref(power_names_list[index], 1);
                             return_list[index] = temp;
                             break;
                         }
