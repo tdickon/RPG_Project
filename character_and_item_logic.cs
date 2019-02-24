@@ -26,16 +26,16 @@ namespace character_and_item_logic
         }
         protected character(personal_information char_info, level_system char_lvl, social_stat_attributes char_social_attributes)
         {
-            character_info = char_info;
-            character_level = char_lvl;
-            character_social_attributes = char_social_attributes;
+            set_character_info(char_info);
+            set_character_level(char_lvl);
+            set_social_attributes(char_social_attributes);
             return;
         }
         protected character(character char_copy_from)
         {
-            this.character_info = char_copy_from.character_info;
-            this.character_level = char_copy_from.character_level;
-            this.character_social_attributes = char_copy_from.character_social_attributes;
+            set_character_info(char_copy_from.return_character_info());
+            set_character_level(char_copy_from.return_character_level());
+            set_social_attributes(char_copy_from.return_character_social_attributes());
             return;
         }
 
@@ -55,7 +55,7 @@ namespace character_and_item_logic
             character_social_attributes = social_attributes;
             return;
         }
-        
+
         //Return Functions
         public personal_information return_character_info()
         {
@@ -77,7 +77,72 @@ namespace character_and_item_logic
         protected derived_stats character_derived_stats;
         protected armor_stats character_active_armor;
         //Constructors
+        public super()
+        {
+            character_super_info = new super_information();
+            character_base_combat_attributes = new base_combat_attributes();
+            character_derived_stats = new derived_stats();
+            character_active_armor = new armor_stats(); //this will probably become a new class called "armor"
+            return;
+        }
+        public super(super_information super_info, base_combat_attributes base_cmbt_attr, derived_stats char_d_stats, armor_stats active_armor)
+        {
+            set_character_super_info(super_info);
+            set_character_base_combat_attributes(base_cmbt_attr);
+            set_character_derived_stats(char_d_stats);
+            set_character_active_armor(active_armor);
+            return;
+        }
+        public super(super copy)
+        {
+            set_character_super_info(copy.return_character_super_info());
+            set_character_base_combat_attributes(copy.return_character_base_combat_attributes());
+            set_character_derived_stats(copy.return_character_derived_stats());
+            set_character_active_armor(copy.return_character_active_armor());
+            return;
+        }
 
+        //Set functions
+        public void set_character_super_info(super_information char_sup_info)
+        {
+            character_super_info = char_sup_info;
+            return;
+        }
+        public void set_character_base_combat_attributes(base_combat_attributes attribute_values)
+        {
+            character_base_combat_attributes = attribute_values;
+            return;
+        }
+        public void set_character_derived_stats(derived_stats d_stats)
+        {
+            character_derived_stats = d_stats;
+            return;
+        }
+        public void set_character_active_armor(armor_stats active_armor)
+        {
+            character_active_armor = active_armor;
+            return;
+
+        }
+
+        //Return Functions
+        public super_information return_character_super_info()
+        {
+            return character_super_info;
+        }
+        public base_combat_attributes return_character_base_combat_attributes()
+        {
+            return character_base_combat_attributes;
+        }
+        public derived_stats return_character_derived_stats()
+        {
+            return character_derived_stats;
+
+        }
+        public armor_stats return_character_active_armor()
+        {
+            return character_active_armor;
+        }
     }
 
     public class player_character : super
@@ -145,7 +210,7 @@ namespace character_and_item_logic
             }
             return value_to_return;
         }
-        public void set_baseCombat_stat_value(int value,string stat_to_return) //This is a function that returns a character's power stats. 
+        public void set_baseCombat_stat_value(int value, string stat_to_return) //This is a function that returns a character's power stats. 
         {
             misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
             switch (stat_to_return)
@@ -247,32 +312,32 @@ namespace character_and_item_logic
         }
         public void set_social_stat_values(int value, string stat_to_set)
         {
-          misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
-          switch (stat_to_set)
-          {
-           case "street_smarts":
-                street_smarts = tool_kit.set_int_value(value);
-                break;
-           case "education_level":
-                education_level = tool_kit.set_int_value(value);
-                break;
-           case "charisma":
-                charisma = tool_kit.set_int_value(value);
-                break;
-           case "tech":
-                tech_knowledge = tool_kit.set_int_value(value);
-                break;
-           case "science":
-                science_knowledge = tool_kit.set_int_value(value);
-                break;
-           case "mystical":
-                mystical_knowledge = tool_kit.set_int_value(value);
-                break;
-           case "cosmic":
-                cosmic_knowledge = tool_kit.set_int_value(value);
-                break;
-          }
-          return;
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            switch (stat_to_set)
+            {
+                case "street_smarts":
+                    street_smarts = tool_kit.set_int_value(value);
+                    break;
+                case "education_level":
+                    education_level = tool_kit.set_int_value(value);
+                    break;
+                case "charisma":
+                    charisma = tool_kit.set_int_value(value);
+                    break;
+                case "tech":
+                    tech_knowledge = tool_kit.set_int_value(value);
+                    break;
+                case "science":
+                    science_knowledge = tool_kit.set_int_value(value);
+                    break;
+                case "mystical":
+                    mystical_knowledge = tool_kit.set_int_value(value);
+                    break;
+                case "cosmic":
+                    cosmic_knowledge = tool_kit.set_int_value(value);
+                    break;
+            }
+            return;
         }
     }
     //---------------------------------------------------------------------------------------------------------------------------------------
@@ -284,21 +349,24 @@ namespace character_and_item_logic
 
         public personal_information()
         {
-            character_name = "";
-            sex = "";
-            occupation = "";
+            set_character_name("");
+            set_character_sex("");
+            set_character_occupation("");
+            return;
         }
         public personal_information(string char_name, string char_sex, string job)
         {
-            character_name = char_name;
-            sex = char_sex;
-            occupation = job;
+            set_character_name(char_name);
+            set_character_sex(char_sex);
+            set_character_occupation(job);
+            return;
         }
         public personal_information(personal_information data_to_copy)
         {
-            this.character_name = data_to_copy.character_name;
-            this.sex = data_to_copy.sex;
-            this.occupation = data_to_copy.occupation;
+            set_character_name(data_to_copy.return_character_name());
+            set_character_occupation(data_to_copy.return_char_occupation());
+            set_character_sex(data_to_copy.return_char_sex());
+            return;
         }
 
         //Return functions
@@ -337,9 +405,73 @@ namespace character_and_item_logic
     {
         private string super_name;
         private int hero_reputation; //Negative shows a villain - Positive shows a hero
-        private power_type super_power; 
+        private power_type super_power;
         //class about character reputation / status 
         //class about character type - which holds their abilities
+
+        //Constructors:
+        public super_information()
+        {
+            set_super_name("");
+            set_reputation(0);
+            power_type temp = new power_type();
+            set_super_power(temp);
+            return;
+
+        }
+        public super_information(string name, int hero_rep, power_type super_pwr)
+        {
+            set_super_name(name);
+            set_reputation(hero_rep);
+            set_super_power(super_pwr);
+            return;
+        }
+        public super_information(super_information copy)
+        {
+            set_super_name(copy.return_super_name());
+            set_reputation(copy.return_hero_rep());
+            set_super_power(copy.return_super_pwr());
+            return;
+        }
+        //Set Functions
+        public void set_super_name(string name)
+        {
+            super_name = name;
+            return;
+        }
+        private void set_reputation(int value)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            hero_reputation = tool_kit.set_int_value(value);
+            return;
+
+        }
+        public void set_super_power(power_type pwr)
+        {
+            super_power = pwr;
+            return;
+        }
+
+        //Return Functions
+        public string return_super_name()
+        {
+            return super_name;
+        }
+        public int return_hero_rep()
+        {
+            return hero_reputation;
+        }
+        public power_type return_super_pwr()
+        {
+            return super_power;
+        }
+
+        public void hero_rep_change(int rep_change) //Any action that a character carries out will have a + or - to their rep
+        {
+            hero_reputation += rep_change;
+            return; 
+        }
+
     }
     //---------------------------------------------------------------------------------------------------------------------------------------
     public class level_system
@@ -404,7 +536,7 @@ namespace character_and_item_logic
         }
         public void set_current_exp(int xp)
         {
-            if(xp < 0) { return; }
+            if (xp < 0) { return; }
             else
             {
                 current_exp += xp;
@@ -924,6 +1056,220 @@ namespace character_and_item_logic
 
     }
     //--------------------------------------------------------------------------------------------------------------------------------------
+    public class item_data
+    {
+        protected string item_name;
+        protected int item_value;
+
+        //Constructors
+        public item_data()
+        {
+            set_item_name("");
+            set_item_value(0);
+            return;
+        }
+        public item_data(string name, int value)
+        {
+            set_item_name(name);
+            set_item_value(value);
+            return;
+
+        }
+        public item_data(item_data copy)
+        {
+            set_item_name(copy.return_item_name());
+            set_item_value(copy.return_item_value());
+            return;
+        }
+        //Set Functions
+        protected void set_item_name(string name)
+        {
+            item_name = name;
+            return;
+        }
+        protected void set_item_value(int value)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            item_value = tool_kit.set_int_value(value);
+            return;
+        }
+        public void set_item_data(item_data item_info)
+        {
+            set_item_name(item_info.return_item_name());
+            set_item_value(item_info.return_item_value());
+        }
+        //Return functions
+        public string return_item_name()
+        {
+            return item_name;
+        }
+        public int return_item_value()
+        {
+            return item_value;
+        }
+    }
+        public class debuff_data : item_data //Class that will deal with all of our items that cause a debuff to another character
+    {
+        protected string[] powers_harmed; //Name of the powers that you will be causing more damage too. 
+        protected double debuff_damage_modifier;
+        protected int total_rounds_debuff_lasts;
+        protected int rounds_lapsed;
+        //Constructors
+        public debuff_data()
+        {
+            item_data temp = new item_data();
+            set_item_data(temp);
+            set_total_rounds_debuff_lasts(0);
+            set_rounds_lapsed(0);
+            return;
+        }
+        public debuff_data(item_data item_info, string[] pwrs_harmed, double dmg_modifier, int total_rounds, int current_rounds)
+        {
+            set_item_data(item_info);
+            set_power_debuffs(pwrs_harmed);
+            set_debuff_damage_modifier(dmg_modifier);
+            set_total_rounds_debuff_lasts(total_rounds);
+            set_rounds_lapsed(current_rounds);
+            return;
+        }
+        public debuff_data(debuff_data copy)
+        {
+            item_data temp = new item_data(copy.return_item_name(), copy.return_item_value());
+            set_item_data(temp);
+            set_power_debuffs(copy.return_powers_harmed());
+            set_debuff_damage_modifier(copy.return_debuff_damage_modifier());
+            set_total_rounds_debuff_lasts(copy.return_total_rounds_debuff_lasts());
+            set_rounds_lapsed(copy.return_rounds_lapsed());
+            return;
+        }
+        //Set Functions
+        public void set_power_debuffs(string[] powers)
+        {
+            int len = powers.Length;
+            for (int index = 0; index < len; ++index) { powers_harmed[index] = powers[index]; }
+            return;
+        }
+        public void set_total_rounds_debuff_lasts(int value)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            total_rounds_debuff_lasts = tool_kit.set_int_value(value);
+            return;
+        }
+        private void set_rounds_lapsed(int value)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            rounds_lapsed = tool_kit.set_int_value(value);
+            return;
+        }
+        public void set_debuff_damage_modifier(double value)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            debuff_damage_modifier = tool_kit.set_double_value(value);
+            return;
+
+        }
+
+        //Return Functions
+        public string[] return_powers_harmed()
+        {
+            return powers_harmed;
+
+        }
+        public double return_debuff_damage_modifier()
+        {
+            return debuff_damage_modifier;
+
+        }
+        public int return_total_rounds_debuff_lasts()
+        {
+            return total_rounds_debuff_lasts;
+        }
+        public int return_rounds_lapsed()
+        {
+            return rounds_lapsed;
+        }
+    }
+        public class buff_data : item_data
+        {
+        protected string[] powers_nerfed; //Name of the powers that will do less damage to you. 
+        protected double buff_protection_modifier;
+        protected int total_rounds_buff_lasts;
+        protected int rounds_lapsed;
+        //Constructors
+        public buff_data()
+        {
+            item_data temp = new item_data();
+            set_item_data(temp);
+            set_total_rounds_buff_lasts(0);
+            set_rounds_lapsed(0);
+            return;
+        }
+        public buff_data(item_data item_info, string[] pwrs_nerfed, double protection_modifier, int total_rounds, int current_rounds)
+        {
+            set_item_data(item_info);
+            set_powers_nerfed(pwrs_nerfed);
+            set_buff_protection_modifier(protection_modifier);
+            set_total_rounds_buff_lasts(total_rounds);
+            set_rounds_lapsed(current_rounds);
+            return;
+        }
+        public buff_data(buff_data copy)
+        {
+            item_data temp = new item_data(copy.return_item_name(), copy.return_item_value());
+            set_item_data(temp);
+            set_powers_nerfed(copy.return_powers_nerfed());
+            set_buff_protection_modifier(copy.return_buff_protection_modifier());
+            set_total_rounds_buff_lasts(copy.return_total_rounds_buff_lasts());
+            set_rounds_lapsed(copy.return_rounds_lapsed());
+            return;
+        }
+        //Set Functions
+        public void set_powers_nerfed(string[] powers)
+        {
+            int len = powers.Length;
+            for (int index = 0; index < len; ++index) { powers_nerfed[index] = powers[index]; }
+            return;
+        }
+        public void set_total_rounds_buff_lasts(int value)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            total_rounds_buff_lasts = tool_kit.set_int_value(value);
+            return;
+        }
+        private void set_rounds_lapsed(int value)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            rounds_lapsed = tool_kit.set_int_value(value);
+            return;
+        }
+        public void set_buff_protection_modifier(double value)
+        {
+            misc_character_and_item_logic_funcs tool_kit = new misc_character_and_item_logic_funcs();
+            buff_protection_modifier = tool_kit.set_double_value(value);
+            return;
+
+        }
+
+        //Return Functions
+        public string[] return_powers_nerfed()
+        {
+            return powers_nerfed;
+
+        }
+        public double return_buff_protection_modifier()
+        {
+            return buff_protection_modifier;
+
+        }
+        public int return_total_rounds_buff_lasts()
+        {
+            return total_rounds_buff_lasts;
+        }
+        public int return_rounds_lapsed()
+        {
+            return rounds_lapsed;
+        }
+    }
     //=======================================================================================================================================
     //EXTENSION CLASSES - Classes that help flesh out functionality for our character classes. 
     //=======================================================================================================================================
